@@ -70,6 +70,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -97,6 +98,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mémoire Partagée\Account.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -107,6 +109,7 @@
     </Compile>
     <Compile Include="IServiceRDM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mémoire Partagée\Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

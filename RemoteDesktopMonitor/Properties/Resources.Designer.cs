@@ -62,11 +62,65 @@ namespace ConsumeWebServiceRest.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à erreur de serialisation.
+        ///   Recherche une chaîne localisée semblable à Erreur d&apos;accès au service : {0}.
+        /// </summary>
+        internal static string ERREUR_APPELSERVICE {
+            get {
+                return ResourceManager.GetString("ERREUR_APPELSERVICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Erreur de désérialisation du résultat.
+        /// </summary>
+        internal static string ERREUR_DESERIALISATIONRETOUR {
+            get {
+                return ResourceManager.GetString("ERREUR_DESERIALISATIONRETOUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Erreur de sérialisation des paramètres.
+        /// </summary>
+        internal static string ERREUR_SERIALISATIONPARAMS {
+            get {
+                return ResourceManager.GetString("ERREUR_SERIALISATIONPARAMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Erreur de sérialisation de la valeur de retour : {0}.
         /// </summary>
         internal static string ERREUR_SERIALISATIONRESULT {
             get {
                 return ResourceManager.GetString("ERREUR_SERIALISATIONRESULT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Appel du service {0} annulé.
+        /// </summary>
+        internal static string ERREUR_TIMEOUT {
+            get {
+                return ResourceManager.GetString("ERREUR_TIMEOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à application/json.
+        /// </summary>
+        internal static string SERIALISATION_JSON {
+            get {
+                return ResourceManager.GetString("SERIALISATION_JSON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à application/xml.
+        /// </summary>
+        internal static string SERIALISATION_XML {
+            get {
+                return ResourceManager.GetString("SERIALISATION_XML", resourceCulture);
             }
         }
     }

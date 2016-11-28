@@ -18,17 +18,17 @@ namespace RDMService
     public class ServiceRDM : IServiceRDM
     {
         // PLAGE DES CODES ERREUR POUR LE WebService ---> [1 - 200[
-        public const int CodeRet_Ok = 0;
-        public const int CodeRet_PseudoUtilise = 1;
-        public const int CodeRet_PseudoObligatoire = 2;
-        public const int CodeRet_PseudoDownloadObligatoire = 3;
-        public const int CodeRet_Logout = 4;
-        public const int CodeRet_PasswordObligatoire = 5;
-        public const int CodeRet_PasswordIncorrect = 6;
-        public const int CodeRet_PseudoDownloadLogout = 7;
-        public const int CodeRet_ParamKeyInconnu = 10;
-        public const int CodeRet_ParamTypeInvalid = 11;
-        public const int CodeRet_ErreurInterneService = 100;
+        public const int CodeRetOk = 0;
+        public const int CodeRetPseudoUtilise = 1;
+        public const int CodeRetPseudoObligatoire = 2;
+        public const int CodeRetPseudoDownloadObligatoire = 3;
+        public const int CodeRetPseudoNonLogue = 4;
+        public const int CodeRetPasswordObligatoire = 5;
+        public const int CodeRetPasswordIncorrect = 6;
+        public const int CodeRetPseudoDownloadNonLogue = 7;
+        public const int CodeRetParamKeyInconnu = 10;
+        public const int CodeRetParamTypeInvalid = 11;
+        public const int CodeRetErreurInterneService = 100;
 
         #region IServiceRDM Membres
 
@@ -41,7 +41,7 @@ namespace RDMService
         public WSR_Result Login(WSR_Params p)
         {
             string pseudo = null;
-            //string password = null;
+            string password = null;
             WSR_Result ret = null;
 
             ret = VerifParamType(p, "pseudo", out pseudo);
@@ -49,10 +49,26 @@ namespace RDMService
             {
                 return ret;
             }
-            return ret;
+
+            AccountError err = Account.Add(pseudo, out password);
+
+            switch (err)
+            {
+                case AccountError.Ok:
+                return new WSR_Result(password, true);
+
+                case AccountError.KeyNullOrEmpty:
+                    return new WSR_Result(CodeRetPseudoObligatoire, String.Format(Properties.Resources.PseudoObligatoire));
+
+                case AccountError.KeyExist:
+                    return new WSR_Result(CodeRetPseudoUtilise, String.Format(Properties.Resources.PseudoUtilise));
+
+                default :
+                return new WSR_Result(CodeRetErreurInterneService, String.Format(Properties.Resources.ErreurInterneService));
+            }
 
         }
-
+        
         /// <summary>
         /// Permet de se Déloguer du WebService
         /// </summary>
@@ -76,9 +92,32 @@ namespace RDMService
             {
                 return ret;
             }
-            return ret;
-        }
 
+            AccountError err = Account.Remove(pseudo,  password);
+
+            switch (err)
+            {
+                case AccountError.Ok:
+                    return new WSR_Result();
+
+                case AccountError.KeyNullOrEmpty:
+                    return new WSR_Result(CodeRetPseudoObligatoire, String.Format(Properties.Resources.PseudoObligatoire));
+
+                case AccountError.keyNotFound:
+                    return new WSR_Result(CodeRetPseudoNonLogue, String.Format(Properties.Resources.PseudoNonLogue));
+
+                case AccountError.PasswordNullOrEmpty:
+                    return new WSR_Result(CodeRetPasswordObligatoire, String.Format(Properties.Resources.PasswordObligatoire));
+
+                case AccountError.PasswordWrong:
+                    return new WSR_Result(CodeRetPasswordIncorrect, String.Format(Properties.Resources.PasswordIncorrect));
+
+                default:
+                    return new WSR_Result(CodeRetErreurInterneService, String.Format(Properties.Resources.ErreurInterneService));
+            }
+
+        }
+        
         /// <summary>
         /// Permet d'obtenir la liste des utilisateurs logués au WebService
         /// </summary>
@@ -103,7 +142,29 @@ namespace RDMService
                 return ret;
             }
 
-            return ret;
+            AccountError err = Account.GetKeys(pseudo, password, out lstKeys);
+
+            switch (err)
+            {
+                case AccountError.Ok:
+                    return new WSR_Result(lstKeys, true);
+
+                case AccountError.KeyNullOrEmpty:
+                    return new WSR_Result(CodeRetPseudoObligatoire, String.Format(Properties.Resources.PseudoObligatoire));
+
+                case AccountError.keyNotFound:
+                    return new WSR_Result(CodeRetPseudoNonLogue, String.Format(Properties.Resources.PseudoNonLogue));
+
+                case AccountError.PasswordNullOrEmpty:
+                    return new WSR_Result(CodeRetPasswordObligatoire, String.Format(Properties.Resources.PasswordObligatoire));
+
+                case AccountError.PasswordWrong:
+                    return new WSR_Result(CodeRetPasswordIncorrect, String.Format(Properties.Resources.PasswordIncorrect));
+
+                default:
+                    return new WSR_Result(CodeRetErreurInterneService, String.Format(Properties.Resources.ErreurInterneService));
+            }
+
         }
 
         /// <summary>
@@ -136,7 +197,29 @@ namespace RDMService
                 return ret;
             }
 
-            return ret;
+            AccountError err = Account.WriteData(pseudo, password, data);
+
+            switch (err)
+            {
+                case AccountError.Ok:
+                    return new WSR_Result();
+
+                case AccountError.KeyNullOrEmpty:
+                    return new WSR_Result(CodeRetPseudoObligatoire, String.Format(Properties.Resources.PseudoObligatoire));
+
+                case AccountError.keyNotFound:
+                    return new WSR_Result(CodeRetPseudoNonLogue, String.Format(Properties.Resources.PseudoNonLogue));
+
+                case AccountError.PasswordNullOrEmpty:
+                    return new WSR_Result(CodeRetPasswordObligatoire, String.Format(Properties.Resources.PasswordObligatoire));
+
+                case AccountError.PasswordWrong:
+                    return new WSR_Result(CodeRetPasswordIncorrect, String.Format(Properties.Resources.PasswordIncorrect));
+
+                default:
+                    return new WSR_Result(CodeRetErreurInterneService, String.Format(Properties.Resources.ErreurInterneService));
+            }
+
         }
 
         /// <summary>
@@ -172,7 +255,35 @@ namespace RDMService
                 return ret;
             }
 
-            return ret;
+            AccountError err = Account.ReadData(pseudo, password,pseudoDownload,out data);
+
+            switch (err)
+            {
+                case AccountError.Ok:
+                    return new WSR_Result(data, false);
+
+                case AccountError.KeyNullOrEmpty:
+                    return new WSR_Result(CodeRetPseudoObligatoire, String.Format(Properties.Resources.PseudoObligatoire));
+
+                case AccountError.keyNotFound:
+                    return new WSR_Result(CodeRetPseudoNonLogue, String.Format(Properties.Resources.PseudoNonLogue));
+
+                case AccountError.PasswordNullOrEmpty:
+                    return new WSR_Result(CodeRetPasswordObligatoire, String.Format(Properties.Resources.PasswordObligatoire));
+
+                case AccountError.PasswordWrong:
+                    return new WSR_Result(CodeRetPasswordIncorrect, String.Format(Properties.Resources.PasswordIncorrect));
+
+                case AccountError.keyDownloadNullOrEmpty:
+                    return new WSR_Result(CodeRetPseudoDownloadObligatoire, String.Format(Properties.Resources.PseudoDownloadObligatoire));
+
+                case AccountError.keyDownloadNotFound:
+                    return new WSR_Result(CodeRetPseudoDownloadNonLogue, String.Format(Properties.Resources.PseudoDownloadNonLogue));
+
+                default:
+                    return new WSR_Result(CodeRetErreurInterneService, String.Format(Properties.Resources.ErreurInterneService));
+            }
+
 
         }
 
@@ -185,7 +296,7 @@ namespace RDMService
             data = null;
 
             if (!p.ContainsKey(key))
-                return new WSR_Result(CodeRet_ParamKeyInconnu, String.Format(Properties.Resources.PARAMKEYINCONNU, key));
+                return new WSR_Result(CodeRetParamKeyInconnu, String.Format(Properties.Resources.ParamKeyInconnu, key));
 
             data = p.GetValueSerialized(key);
 
@@ -210,7 +321,7 @@ namespace RDMService
                 catch (Exception) { } // Il peut y avoir exception si le type est inconnu (type personnalisé qui n'est pas dans les références)
 
                 if (value == null)
-                    return new WSR_Result(CodeRet_ParamTypeInvalid, String.Format(Properties.Resources.PARAMTYPEINVALID, key));
+                    return new WSR_Result(CodeRetParamTypeInvalid, String.Format(Properties.Resources.ParamTypeInvalid, key));
             }
 
             return null;

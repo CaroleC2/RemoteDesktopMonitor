@@ -25,11 +25,22 @@ namespace ConsumeWebServiceRest
 
         #region Constructeurs
 
+        /// <summary>
+        /// Constructeur qui ne retourne pas de data, et qui indique que tout c'est bien passé.
+        /// </summary>
         public WSR_Result()
         {
             IsSuccess = true;
         }
 
+        /// <summary>
+        /// Constructeur qui retourne des data, et qui indique que tout c'est bien passé.
+        /// </summary>
+        /// <param name="data">Data retournés par le WebService</param>
+        /// <param name="serialize">Permet de définir si les Data doivent être sérialisés ou non</param>
+        /// <param name="sourceMemberName">Permet d'obtenir la méthode ou le nom de la propriété de l'appel de ce constructeur</param>
+        /// <param name="sourceFilePath">Permet d'obtenir le chemin d'accès complet du fichier source qui contient l'appel de ce constructeur</param>   
+        /// <param name="sourceLineNumber">Permet d'obtenir le numéro de ligne dans le fichier source de l'appel de ce constructeur</param>
         public WSR_Result(object data, bool serialize,
                          [CallerMemberName] string sourceMemberName = "",
                          [CallerFilePath] string sourceFilePath = "",
@@ -62,13 +73,21 @@ namespace ConsumeWebServiceRest
             {
                 IsSuccess = false;
                 ErrorCode = CodeRet_Serialize;
-                ErrorMessage = String.Format(Properties.Resources.ERREUR_SERIALISATIONRESULT, ex.Message);
+                ErrorMessage = String.Format(Properties.Resources.ERREUR_APPELSERVICE, ex.Message);
                 ErrorSourceMemberName = sourceMemberName;
                 ErrorSourceFile = Path.GetFileNameWithoutExtension(sourceFilePath);
                 ErrorSourceLineNumber = sourceLineNumber;
             }
         }
 
+        /// <summary>
+        /// Constructeur qui indique une erreur.
+        /// </summary>
+        /// <param name="errorCode">Numéro de l'erreur</param>
+        /// <param name="errorMessage">Message de l'erreur</param>
+        /// <param name="sourceMemberName">Permet d'obtenir la méthode ou le nom de la propriété de l'appel de ce constructeur</param>
+        /// <param name="sourceFilePath">Permet d'obtenir le chemin d'accès complet du fichier source qui contient l'appel de ce constructeur</param>   
+        /// <param name="sourceLineNumber">Permet d'obtenir le numéro de ligne dans le fichier source de l'appel de ce constructeur</param>
         public WSR_Result(int errorCode, string errorMessage,
                          [CallerMemberName] string sourceMemberName = "",
                          [CallerFilePath] string sourceFilePath = "",
@@ -86,6 +105,9 @@ namespace ConsumeWebServiceRest
 
         #region Propriétés
 
+        /// <summary>
+        /// Permet de récupérer les data désérialisés
+        /// </summary>
         public object Data
         {
             get
@@ -95,21 +117,43 @@ namespace ConsumeWebServiceRest
             }
         }
 
+        /// <summary>
+        /// Permet de savoir si il y a des erreurs à traiter
+        /// </summary>
         [DataMember]
         public bool IsSuccess { get; set; }
 
+
+        /// <summary>
+        /// Numéro de l'erreur
+        /// </summary>
         [DataMember]
         public int ErrorCode { get; set; }
 
+
+        /// <summary>
+        /// Message de l'erreur
+        /// </summary>
         [DataMember]
         public string ErrorMessage { get; set; }
 
+
+        /// <summary>
+        /// Méthode ou nom de la propriété de l'appel de ce constructeur
+        /// </summary>
         [DataMember]
         public string ErrorSourceMemberName { get; set; }
 
+        /// <summary>
+        /// Chemin d'accès complet du fichier source qui contient l'appel de ce constructeur
+        /// </summary>
         [DataMember]
         public string ErrorSourceFile { get; set; }
 
+
+        /// <summary>
+        /// Numéro de ligne dans le fichier source de l'appel de ce constructeur
+        /// </summary>
         [DataMember]
         public int ErrorSourceLineNumber { get; set; }
 

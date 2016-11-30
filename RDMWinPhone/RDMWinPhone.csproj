@@ -80,6 +80,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\RDMDALWSR\RDMDALWSR.csproj">
+      <Project>{7c074ba0-2ed1-487b-a518-c9165542ad48}</Project>
+      <Name>RDMDALWSR</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -116,12 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\Admin\Desktop\Module 7\RemoteDesktopMonitor\6 - RDMDalWsr\RDMDALWSR\RDMDALWSR.csproj">
-      <Project>{bcde0624-244c-499e-9c83-d3c12ff05789}</Project>
-      <Name>RDMDALWSR</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

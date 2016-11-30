@@ -95,12 +95,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\Admin\Desktop\Module 7\RemoteDesktopMonitor\6 - RDMDalWsr\RDMDALWSR\RDMDALWSR.csproj">
-      <Project>{bcde0624-244c-499e-9c83-d3c12ff05789}</Project>
-      <Name>RDMDALWSR</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 et x64%29</ProductName>
@@ -111,6 +105,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RDMDALWSR\RDMDALWSR.csproj">
+      <Project>{7c074ba0-2ed1-487b-a518-c9165542ad48}</Project>
+      <Name>RDMDALWSR</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

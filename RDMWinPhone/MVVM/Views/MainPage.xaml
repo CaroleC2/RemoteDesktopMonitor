@@ -9,6 +9,44 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-   
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+
+        <Button x:Name="btnConnect" Content="Connecter" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"   Grid.Row="0" Click="BtnConnect_OnClick" RenderTransformOrigin="0.621,0.126"/>
+        <Button x:Name="btnDisconnect" Content="Déconnecter" HorizontalAlignment="Left" Margin="145,0,0,0" VerticalAlignment="Top"   Grid.Row="0" Click="BtnDisconnect_OnClick" RenderTransformOrigin="0.621,0.126"/>
+        <Button x:Name="btnPhoto" Content="Photo" HorizontalAlignment="Left" Margin="281,0,0,0" VerticalAlignment="Top" Grid.Row="0" Click="BtnPhoto_OnClick" RenderTransformOrigin="0.621,0.126"/>
+        
+        <TextBlock Style="{StaticResource StyleTexte}"  x:Name="txtTitre" Margin="0,56,0,0.5" TextWrapping="Wrap"  Text="Titre" Grid.Row="1"   />
+
+        <ListView x:Name="listView" HorizontalAlignment="Center" Height="100" Margin="84,121.5,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.RowSpan="2" Width="100"/>
+
+        <TextBlock Style="{StaticResource ErrorTexte}" x:Name="txtError"  Margin="119,460.5,0,0" Grid.Row="3" TextWrapping="Wrap" Text="LabelError" VerticalAlignment="Top"/>
+
+       
+
+
+
+
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar IsSticky="True" x:Name="appBar">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Manage" IsCompact="False" Label="Params"/>
+                <AppBarButton Icon="Refresh" IsCompact="False" Label="Synchro"/>
+                <AppBarButton Icon="ClosePane" IsCompact="False" Label="Exit"/>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Params"/>
+                <AppBarButton Label="Synchro"/>
+                <AppBarButton Label="Exit"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

@@ -44,5 +44,30 @@ namespace RDMWinPhone
             // Si vous utilisez le NavigationHelper fourni par certains modèles,
             // cet événement est géré automatiquement.
         }
+
+        private void BtnConnect_OnClick(object sender, RoutedEventArgs e)
+        {
+            //btnConnect.IsEnabled = true;
+            //btnDisconnect.IsEnabled = false;
+            //btnPhoto.IsEnabled = false;
+
+
+
+            //btnPhoto.IsEnabled = true;
+            //btnDisconnect.IsEnabled = true;
+            //btnConnect.IsEnabled = false;
+
+                throw new NotImplementedException();
+        }
+
+        private void BtnDisconnect_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BtnPhoto_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

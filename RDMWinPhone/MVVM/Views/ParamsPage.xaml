@@ -1,54 +1,50 @@
 ﻿<Page
-    x:Class="RDMWinPhone.MVVM.Views.ParamsPage"
+    x:Class="RDMWinPhone.ParamsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RDMWinPhone.MVVM.Views"
+    xmlns:local="using:RDMWinPhone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <CommonNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Page.BottomAppBar>
+        <CommandBar IsSticky="True" >
+            <AppBarButton x:Name="mnuValider" x:Uid="ParamsPage_MnuVal" Icon="Accept" Label="Val" Click="mnuValider_Click" />
+            <AppBarButton x:Name="mnuAnnuler" x:Uid="ParamsPage_MnuAnn" Icon="Cancel" Label="Ann" Click="mnuAnnuler_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Margin="10,0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-
             <ColumnDefinition Width="Auto"   />
             <ColumnDefinition  Width="*"  />
         </Grid.ColumnDefinitions>
 
-        
+        <TextBlock x:Name="lblTitre" x:Uid="ParamsPage_Titre" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Params" Style="{StaticResource StyleTitres}"/>
 
-        <TextBlock Style="{StaticResource StyleTexte}"  x:Name="txtTitre" Margin="0,56,0,0.5" TextWrapping="Wrap"  Text="Titre" Grid.Row="0" VerticalAlignment =" Top" Grid.ColumnSpan="2"  />
+        <TextBlock x:Uid="ParamsPage_Adr" Grid.Row="1" Grid.Column="0"  Text="Adr"  FontSize="16" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtAdrBase" Grid.Row="1" Grid.Column="1" FontSize="16" Margin="10,0,0,10" InputScope="Url" Grid.ColumnSpan="2" />
 
-        <TextBlock   x:Name="txtAdresse" Margin="10,0,0,10" TextWrapping="Wrap"  Text="Adresse" FontSize =" 16" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
-        <TextBox x:Name="txtBoxAdresse"  Margin="10,0,0,10" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="TextBox"  Width="223"/>
-
-        <TextBlock   x:Name="txtPseudo" Margin="10,0,0,10" TextWrapping="Wrap"  Text="Pseudo" FontSize =" 16" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
-        <TextBox x:Name="txtBoxPseudo"  Margin="10,0,0,10" Grid.Row="2" Grid.Column="1"  TextWrapping="Wrap" Text="TextBox"  Width="223"/>
-        
+        <TextBlock x:Uid="ParamsPage_Pseudo" Grid.Row="2" Grid.Column="0"  Text="Pseudo"  FontSize="16" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtPseudo" Grid.Row="2" Grid.Column="1" FontSize="16" Margin="10,0,0,10" InputScope="Url" Grid.ColumnSpan="2" />
     </Grid>
-
-
-    <Page.BottomAppBar>
-        <CommandBar IsSticky="True" x:Name="appBar">
-            <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Accept" IsCompact="False" Label="Valid"/>
-                <AppBarButton Icon="Cancel" IsCompact="False" Label="Cancel"/>
-
-            </CommandBar.PrimaryCommands>
-            <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Valid"/>
-                <AppBarButton Label="Cancel"/>
-
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
 
 </Page>

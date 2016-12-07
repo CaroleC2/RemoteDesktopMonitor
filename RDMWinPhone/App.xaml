@@ -9,8 +9,7 @@
 
         <!--<SolidColorBrush x:Key="BrushRouge" Color="Red"/>-->
 
-    
-            <Style x:Key="StyleTexte" TargetType="TextBlock">
+            <Style x:Key="StyleTitres" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="Yellow" />
                 <Setter Property="FontSize" Value="35" />
                 <Setter Property="FontFamily" Value="Elephant" />
@@ -18,7 +17,7 @@
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
 
-        <Style x:Key="ErrorTexte" TargetType="TextBlock">
+        <Style x:Key="StyleErreur" TargetType="TextBlock">
             <Setter Property="Foreground" Value="Red" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontFamily" Value="Elephant" />

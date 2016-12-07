@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 
 
-namespace RDMWinPhone.MVVM.ViewsModels
+namespace RDMWinPhone
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

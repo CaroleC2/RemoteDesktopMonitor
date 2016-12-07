@@ -5,48 +5,69 @@
     xmlns:local="using:RDMWinPhone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:RDMWinPhone"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <converter:NotBoolConverter x:Key="NotBoolConverter"/>
+      <converter:StringToBitmapImageConverter x:Key="StringToBitmapImageConverter"/>
+    </Page.Resources>
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <AppBarButton x:Name="mnuParams" x:Uid="MainPage_MnuParams"  Icon="ContactInfo" Label="Params" IsEnabled="{Binding IsLogged, Converter={StaticResource NotBoolConverter}}" Click="mnuParams_Click"/>
+            <AppBarButton x:Name="mnuSynchro" x:Uid="MainPage_MnuSync" Icon="Refresh" Label="Synchro" IsEnabled="{Binding IsLogged}" Click="mnuSynchro_Click"/>
+            <AppBarButton x:Name="mnuQuitter" x:Uid="MainPage_MnuQuit" Icon="ViewAll" Label="Quit" Margin="55,0,0,0" Click="mnuQuitter_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+
+    <Grid x:Name="grdLst" Margin="5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-
         </Grid.RowDefinitions>
 
 
-        <Button x:Name="btnConnect" Content="Connecter" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"   Grid.Row="0" Click="BtnConnect_OnClick" RenderTransformOrigin="0.621,0.126"/>
-        <Button x:Name="btnDisconnect" Content="Déconnecter" HorizontalAlignment="Left" Margin="145,0,0,0" VerticalAlignment="Top"   Grid.Row="0" Click="BtnDisconnect_OnClick" RenderTransformOrigin="0.621,0.126"/>
-        <Button x:Name="btnPhoto" Content="Photo" HorizontalAlignment="Left" Margin="281,0,0,0" VerticalAlignment="Top" Grid.Row="0" Click="BtnPhoto_OnClick" RenderTransformOrigin="0.621,0.126"/>
-        
-        <TextBlock Style="{StaticResource StyleTexte}"  x:Name="txtTitre" Margin="0,56,0,0.5" TextWrapping="Wrap"  Text="Titre" Grid.Row="1"   />
+        <Button x:Name="btConnect" x:Uid="MainPage_BtConnect" Grid.Row="0" IsEnabled ="{Binding IsLogged, Converter={StaticResource NotBoolConverter}}" Content="Connecter" HorizontalAlignment="Left" Margin="0,0,281,0" VerticalAlignment="Top"  FontSize="14" Click="btConnect_Click"/>
+        <ProgressRing x:Name="prConnect" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,307,0" VerticalAlignment="Top" Height="28" Width="40"/>
+        <Button x:Name="btDisconnect" x:Uid="MainPage_BtDisconnect" Grid.Row="0" IsEnabled ="{Binding IsLogged}" Content="Deconnecter" HorizontalAlignment="Left" Margin="114,0,0,0" VerticalAlignment="Top"  FontSize="14" Click="btDisconnect_Click"/>
+        <ProgressRing x:Name="prDisconnect" Grid.Row="0" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
+        <Button x:Name="btPhoto" x:Uid="MainPage_BtPhoto" Grid.Row="0" IsEnabled ="{Binding IsLogged}" Content="Photo" HorizontalAlignment="Right" Margin="0,0,0,10" VerticalAlignment="Top"  FontSize="14" Click="btPhoto_Click"/>
+        <ProgressRing x:Name="prPhoto" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,50,0" VerticalAlignment="Top" Height="28" Width="40"/>
 
-        <ListView x:Name="listView" HorizontalAlignment="Center" Height="100" Margin="84,121.5,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.RowSpan="2" Width="100"/>
+        <TextBlock x:Name="lblTitre" x:Uid="MainPage_Titre" Grid.Row="1" Text="Titre" Style="{StaticResource StyleTitres}"/>
 
-        <TextBlock Style="{StaticResource ErrorTexte}" x:Name="txtError"  Margin="119,460.5,0,0" Grid.Row="3" TextWrapping="Wrap" Text="LabelError" VerticalAlignment="Top"/>
+        <ListView x:Name="lstvPseudos" Grid.Row="2" ItemsSource="{Binding Users}" Background="Transparent" Margin="10,50,10,60" VerticalAlignment="Top" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition/>
+                </TransitionCollection>
+            </ListView.ItemContainerTransitions>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="ListView_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="22" Text="{Binding PseudoDownload}" VerticalAlignment="Center"/>
+                                <Image Source="{Binding Image, Converter={StaticResource StringToBitmapImageConverter}}" VerticalAlignment="Center"  Width="200" Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-       
-
-
+        <TextBlock x:Name="txtErreur" Grid.Row="3" Text="{Binding ErrorMessage}"  Style="{StaticResource StyleErreur}" />
 
 
     </Grid>
-
-    <Page.BottomAppBar>
-        <CommandBar IsSticky="True" x:Name="appBar">
-            <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Manage" IsCompact="False" Label="Params"/>
-                <AppBarButton Icon="Refresh" IsCompact="False" Label="Synchro"/>
-                <AppBarButton Icon="ClosePane" IsCompact="False" Label="Exit"/>
-            </CommandBar.PrimaryCommands>
-            <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Params"/>
-                <AppBarButton Label="Synchro"/>
-                <AppBarButton Label="Exit"/>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
 </Page>

@@ -91,6 +91,8 @@
     </Compile>
     <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="MVVM\Views\Converters\NotBoolConverter.cs" />
+    <Compile Include="MVVM\Views\Converters\StringToBitmapImageConverter.cs" />
     <Compile Include="MVVM\Views\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
@@ -137,8 +139,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Chaines\" />
+    <PRIResource Include="Chaines\en\Messages.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Chaines\en\Ressources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Chaines\fr-FR\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Chaines\fr-FR\Messages.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
